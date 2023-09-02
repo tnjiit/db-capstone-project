@@ -1,6 +1,6 @@
 ## Introduction
 
-As a part of *Meta's Coursera Database Engineering Course*, this is the capstone project. The project is expected to span 4 weeks. <br/ >
+As a part of *Meta's Coursera Database Engineering Course*, this is the capstone project. The project is expected to span 4 weeks.<br/>
 The project includes:
 1. Week 1
     1. Setup the database and *MySQL* server.
@@ -19,7 +19,7 @@ Through this document, I expect to track my progress in the project.
 | :--- | :--- | :--- |
 | Italics | For the first instance of term in the document | _italics_, *italics* |
 | Bold | For actions |  __bold__, **bold** |
-| Highlight | TBD | '*highlight*' |
+| Highlight | TBD | `highlight` |
 
 ## Release Notes
 
