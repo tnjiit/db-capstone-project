@@ -19,7 +19,7 @@ Through this document, I expect to track my progress in the project.
 | :--- | :--- | :--- |
 | Italics | For the first instance of term in the document | _italics_, *italics* |
 | Bold | For actions |  __bold__, **bold** |
-| Highlight | TBD | 'highlight' |
+| Highlight | TBD | '*highlight*' |
 
 ## Release Notes
 
