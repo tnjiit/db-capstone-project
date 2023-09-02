@@ -21,24 +21,24 @@ USE `LittleLemonDB` ;
 DROP TABLE IF EXISTS `LittleLemonDB`.`Customers` ;
 
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Customers` (
-  `id` INT NOT NULL,
-  `fullName` VARCHAR(255) NULL,
-  `contactNumber` VARCHAR(10) NULL,
-  `email` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`))
+  `CustomerID` INT NOT NULL,
+  `FullName` VARCHAR(255) NULL,
+  `ContactNumber` VARCHAR(10) NULL,
+  `Email` VARCHAR(45) NULL,
+  PRIMARY KEY (`CustomerID`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`Delivery`
+-- Table `LittleLemonDB`.`Menus`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `LittleLemonDB`.`Delivery` ;
+DROP TABLE IF EXISTS `LittleLemonDB`.`Menus` ;
 
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Delivery` (
-  `id` INT NOT NULL,
-  `status` VARCHAR(45) NULL,
-  `date` DATE NULL,
-  PRIMARY KEY (`id`))
+CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Menus` (
+  `MenuID` INT NOT NULL,
+  `MenuName` VARCHAR(45) NULL,
+  `Cuisine` VARCHAR(45) NULL,
+  PRIMARY KEY (`MenuID`))
 ENGINE = InnoDB;
 
 
@@ -48,60 +48,20 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `LittleLemonDB`.`Orders` ;
 
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Orders` (
-  `id` INT NOT NULL,
-  `quantity` INT NULL,
-  `totalCost` DECIMAL NULL,
-  `deliveryId` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_Orders_Delivery1`
-    FOREIGN KEY (`deliveryId`)
-    REFERENCES `LittleLemonDB`.`Delivery` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `LittleLemonDB`.`Staff`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `LittleLemonDB`.`Staff` ;
-
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Staff` (
-  `id` INT NOT NULL,
-  `fullName` VARCHAR(255) NULL,
-  `role` VARCHAR(45) NULL,
-  `salary` DECIMAL NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `LittleLemonDB`.`Bookings`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `LittleLemonDB`.`Bookings` ;
-
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`Bookings` (
-  `id` INT NOT NULL,
-  `date` DATE NULL,
-  `tableNumber` INT NULL,
-  `customerId` INT NULL,
-  `orderId` INT NULL,
-  `staffId` INT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_Bookings_Customers`
-    FOREIGN KEY (`customerId`)
-    REFERENCES `LittleLemonDB`.`Customers` (`id`)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_Bookings_Orders1`
-    FOREIGN KEY (`orderId`)
-    REFERENCES `LittleLemonDB`.`Orders` (`id`)
+  `OrderID` INT NOT NULL,
+  `TotalCost` DECIMAL NULL,
+  `CustomerID` INT NOT NULL,
+  `MenuID` INT NOT NULL,
+  PRIMARY KEY (`OrderID`),
+  CONSTRAINT `fk_Orders_Customers`
+    FOREIGN KEY (`CustomerID`)
+    REFERENCES `LittleLemonDB`.`Customers` (`CustomerID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_Bookings_Staff1`
-    FOREIGN KEY (`staffId`)
-    REFERENCES `LittleLemonDB`.`Staff` (`id`)
-    ON DELETE SET NULL
+  CONSTRAINT `fk_Orders_Menus1`
+    FOREIGN KEY (`MenuID`)
+    REFERENCES `LittleLemonDB`.`Menus` (`MenuID`)
+    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
@@ -112,36 +72,61 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `LittleLemonDB`.`MenuItems` ;
 
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`MenuItems` (
-  `id` INT NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `cuisine` VARCHAR(45) NULL,
-  `category` ENUM('Starter', 'Drink', 'Dessert', 'Main') NOT NULL,
-  `price` DECIMAL NULL,
-  PRIMARY KEY (`id`))
+  `MenuItemsID` INT NOT NULL,
+  `CourseName` VARCHAR(45) NULL,
+  `StarterName` VARCHAR(45) NULL,
+  `DessertName` VARCHAR(45) NULL,
+  PRIMARY KEY (`MenuItemsID`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`OrdersMenu`
+-- Table `LittleLemonDB`.`MenusMenuItems`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `LittleLemonDB`.`OrdersMenu` ;
+DROP TABLE IF EXISTS `LittleLemonDB`.`MenusMenuItems` ;
 
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`OrdersMenu` (
-  `orderId` INT NOT NULL,
-  `menuId` INT NOT NULL,
-  PRIMARY KEY (`menuId`, `orderId`),
-  CONSTRAINT `fk_OrdersMenu_Orders1`
-    FOREIGN KEY (`orderId`)
-    REFERENCES `LittleLemonDB`.`Orders` (`id`)
+CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`MenusMenuItems` (
+  `MenuItemsID` INT NOT NULL,
+  `MenuID` INT NOT NULL,
+  PRIMARY KEY (`MenuItemsID`, `MenuID`),
+  CONSTRAINT `fk_MenuItems_has_Menus_MenuItems1`
+    FOREIGN KEY (`MenuItemsID`)
+    REFERENCES `LittleLemonDB`.`MenuItems` (`MenuItemsID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_OrdersMenu_MenuItems1`
-    FOREIGN KEY (`menuId`)
-    REFERENCES `LittleLemonDB`.`MenuItems` (`id`)
+  CONSTRAINT `fk_MenuItems_has_Menus_Menus1`
+    FOREIGN KEY (`MenuID`)
+    REFERENCES `LittleLemonDB`.`Menus` (`MenuID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+USE `LittleLemonDB` ;
+
+-- -----------------------------------------------------
+-- Placeholder table for view `LittleLemonDB`.`OrdersView`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`OrdersView` (`OrderID` INT, `FullName` INT, `ContactNumber` INT, `Email` INT, `MenuName` INT, `Cuisine` INT, `CourseName` INT, `StarterName` INT, `DessertName` INT, `TotalCost` INT);
+
+-- -----------------------------------------------------
+-- View `LittleLemonDB`.`OrdersView`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `LittleLemonDB`.`OrdersView`;
+DROP VIEW IF EXISTS `LittleLemonDB`.`OrdersView` ;
+USE `LittleLemonDB`;
+CREATE  OR REPLACE VIEW `OrdersView` AS
+SELECT OrderID, FullName, ContactNumber, 
+	Email, MenuName, Cuisine, 
+    CourseName, StarterName, DessertName, TotalCost
+FROM Orders
+INNER JOIN Customers
+USING(CustomerID)
+INNER JOIN Menus
+USING(MenuID)
+INNER JOIN MenusMenuItems
+USING(MenuID)
+INNER JOIN MenuItems
+USING(MenuItemsID);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
