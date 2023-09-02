@@ -23,10 +23,7 @@ Through this document, I expect to track my progress in the project.
 
 ## Release Notes
 
-### 1st September 2023
-
-
-#### Week Overview
+#### Week1 Overview
 
 Need to set up a booking system to keep track of which guests are visiting the restaurant and at what times.<br/>
 
@@ -48,6 +45,14 @@ Need to set up a booking system to keep track of which guests are visiting the r
 
 
 #### Implementation
+
+##### 2nd September 2023 - Week 1
+
+* __Updated__ ER Model. Entities include: Orders, Customers, Menus, MenusMenuItems, MenuItems
+* __Implemented__ OrdersView as a part of the ER Model itself.
+* __Added__ a new orders_view query to create Virtual Table - OrdersView.
+
+##### 1st September 2023 - Week 1
 
 * __Installed__ the requirements:
     1. *MySQL* server: __Downloaded__ via *brew*.
