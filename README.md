@@ -36,11 +36,16 @@ Need to set up a booking system to keep track of which guests are visiting the r
 - Record all changes made within the system as they’re implemented.
 - And allow others to view, review and add to your code.
 
-
 ##### Stage 2
 
 - Create a new user account and grant privileges.
 - Connect server to the MySQL WOrkbench.
+
+##### Stage 3
+
+- Create a normalized (3NF) ER Model for LittleLemon.
+- Create queries to generate the model.
+
 
 #### Implementation
 
@@ -95,3 +100,4 @@ Need to set up a booking system to keep track of which guests are visiting the r
 
 
     - __Connected__ the server to the MySQL Workbench.
+    - __Implemented__ the ER model. Entities include: Bookings, Orders, Delivery, Menu, Customers and Staff.
