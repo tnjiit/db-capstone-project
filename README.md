@@ -28,7 +28,7 @@ Through this document, I expect to track my progress in the project.
 
 #### Week Overview
 
-Need to set up a booking system to keep track of which guests are visiting the restaurant and at what times.<br/    >
+Need to set up a booking system to keep track of which guests are visiting the restaurant and at what times.<br/>
 
 ##### Stage 1
 
