@@ -28,7 +28,9 @@ In this first stage of the task, you need to:
 
 #### Implementation
 
-1. Installed the requirements:
-    1. *MySQL* server: _Downloaded_ via *brew*.
-    1. *MySQL Workbench* : _Downloaded_ via *dev.mysql.com/downloads*.
-    1.  Git: _Downloaded_ via *brew*.
+1. __Installed__ the requirements:
+    1. *MySQL* server: __Downloaded__ via *brew*.
+    1. *MySQL Workbench* : __Downloaded__ via *dev.mysql.com/downloads*.
+    1.  Git: __Downloaded__ via *brew*.
+2. __Added__ *requirements.txt* for python dependencies in the project.
+3. __Added__ *.gitignore* and *README.md* and setup the git repository.
