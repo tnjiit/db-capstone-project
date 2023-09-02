@@ -44,30 +44,44 @@ Need to set up a booking system to keep track of which guests are visiting the r
 * Setup a new user for MySQL server and granted privilages.
     - Created a new user:
 
-        > mysql -uroot -p_PASSWORD_ -e " CREATE USER '*NEW_USERNAME*'@'localhost' IDENTIFIED BY '_NEW_PASSOWRD_' ; "
+        > mysql -uroot -p*PASSWORD* -e " CREATE USER \'*NEW_USERNAME*\'@\'localhost\' IDENTIFIED BY \'*NEW_PASSOWRD*\' ; "
 
     - Confirmed creation of new user:
 
-        > mysql -uroot -p_PASSWORD_ -e " SELECT * FROM mysql.user; "
+        > mysql -uroot -p*PASSWORD* -e " SELECT * FROM mysql.user; "
 
     - Privilages for *NEW_USERNAME* before any grants:
 
-        > mysql -uroot -p_PASSWORD_ -e " SHOW GRANTS FOR '*NEW_USERNAME*'@'localhost' ; "
+        > mysql -uroot -p*PASSWORD* -e " SHOW GRANTS FOR \'*NEW_USERNAME*\'@\'localhost\' ; "
+
         > +----------------------------------------------------+
+
         > | Grants for *NEW_USERNAME*@localhost                |
+
         > +----------------------------------------------------+
+
         > | GRANT USAGE ON *.* TO `*NEW_USERNAME*`@`localhost` |
+
         > +----------------------------------------------------+
+
 
     - Setting new previlates for *NEW_USERNAME*
 
-        > mysql -uroot -p_PASSWORD_ -e " GRANT ALL PRIVILEGES ON *.* TO '*NEW_USERNAME*'@'localhost' WITH GRANT OPTION ; "
-        > mysql -uroot -p_PASSWORD_ -e " SHOW GRANTS FOR '*NEW_USERNAME*'@'localhost' ; "
+        > mysql -uroot -p*PASSWORD* -e " GRANT ALL PRIVILEGES ON *.* TO \'*NEW_USERNAME*\'@\'localhost\' WITH GRANT OPTION ; "
+
+        > mysql -uroot -p*PASSWORD* -e " SHOW GRANTS FOR \'*NEW_USERNAME*\'@\'localhost\' ; "
+
         > +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
         > | Grants for *NEW_USERNAME*@localhost                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+
         > +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
         > | GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, SHUTDOWN, PROCESS, FILE, REFERENCES, INDEX, ALTER, SHOW DATABASES, SUPER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, CREATE TABLESPACE, CREATE ROLE, DROP ROLE ON *.* TO `*NEW_USERNAME*`@`localhost` WITH GRANT OPTION                                                                                                                                                                                                                                                                                                                                                                                     |
+
         > | GRANT APPLICATION_PASSWORD_ADMIN,AUDIT_ABORT_EXEMPT,AUDIT_ADMIN,AUTHENTICATION_POLICY_ADMIN,BACKUP_ADMIN,BINLOG_ADMIN,BINLOG_ENCRYPTION_ADMIN,CLONE_ADMIN,CONNECTION_ADMIN,ENCRYPTION_KEY_ADMIN,FIREWALL_EXEMPT,FLUSH_OPTIMIZER_COSTS,FLUSH_STATUS,FLUSH_TABLES,FLUSH_USER_RESOURCES,GROUP_REPLICATION_ADMIN,GROUP_REPLICATION_STREAM,INNODB_REDO_LOG_ARCHIVE,INNODB_REDO_LOG_ENABLE,PASSWORDLESS_USER_ADMIN,PERSIST_RO_VARIABLES_ADMIN,REPLICATION_APPLIER,REPLICATION_SLAVE_ADMIN,RESOURCE_GROUP_ADMIN,RESOURCE_GROUP_USER,ROLE_ADMIN,SENSITIVE_VARIABLES_OBSERVER,SERVICE_CONNECTION_ADMIN,SESSION_VARIABLES_ADMIN,SET_USER_ID,SHOW_ROUTINE,SYSTEM_USER,SYSTEM_VARIABLES_ADMIN,TABLE_ENCRYPTION_ADMIN,TELEMETRY_LOG_ADMIN,XA_RECOVER_ADMIN ON *.* TO `*NEW_USERNAME*`@`localhost` WITH GRANT OPTION |
+
         > +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
 
     - Connected the server to the MySQL Workbench.
