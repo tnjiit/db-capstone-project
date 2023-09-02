@@ -1,6 +1,6 @@
 ## Introduction
 
-As a part of *Meta's Coursera Database Engineering Course*, this is the capstone project. The project is expected to span 4 weeks. <br/>
+As a part of *Meta's Coursera Database Engineering Course*, this is the capstone project. The project is expected to span 4 weeks. <br/ >
 The project includes:
 1. Week 1
     1. Setup the database and *MySQL* server. _Downloaded_ via *brew*.
@@ -18,7 +18,7 @@ Through this document, I expect to track my progress in the project.
 
 #### Week Overview
 
-Need to set up a booking system to keep track of which guests are visiting the restaurant and at what times.<br/>
+Need to set up a booking system to keep track of which guests are visiting the restaurant and at what times.<br/    >
 
 ##### Stage 1
 
@@ -44,30 +44,30 @@ Need to set up a booking system to keep track of which guests are visiting the r
 * Setup a new user for MySQL server and granted privilages.
     - Created a new user:
 
-    > mysql -uroot -p_PASSWORD_ -e " CREATE USER '_NEW\_USERNAME_'@'localhost' IDENTIFIED BY '_NEW_PASSOWRD_' ; "
+        > mysql -uroot -p_PASSWORD_ -e " CREATE USER '*NEW_USERNAME*'@'localhost' IDENTIFIED BY '_NEW_PASSOWRD_' ; "
 
     - Confirmed creation of new user:
 
-    > mysql -uroot -p_PASSWORD_ -e " SELECT * FROM mysql.user; "
+        > mysql -uroot -p_PASSWORD_ -e " SELECT * FROM mysql.user; "
 
-    - Privilages for _NEW\_USERNAME_ before any grants:
+    - Privilages for *NEW_USERNAME* before any grants:
 
-    > mysql -uroot -p_PASSWORD_ -e " SHOW GRANTS FOR '_NEW\_USERNAME_'@'localhost' ; "
-    > +----------------------------------------------------+
-    > | Grants for _NEW\_USERNAME_@localhost                |
-    > +----------------------------------------------------+
-    > | GRANT USAGE ON *.* TO `_NEW\_USERNAME_`@`localhost` |
-    > +----------------------------------------------------+
+        > mysql -uroot -p_PASSWORD_ -e " SHOW GRANTS FOR '*NEW_USERNAME*'@'localhost' ; "
+        > +----------------------------------------------------+
+        > | Grants for *NEW_USERNAME*@localhost                |
+        > +----------------------------------------------------+
+        > | GRANT USAGE ON *.* TO `*NEW_USERNAME*`@`localhost` |
+        > +----------------------------------------------------+
 
-    - Setting new previlates for _NEW\_USERNAME_
+    - Setting new previlates for *NEW_USERNAME*
 
-    > mysql -uroot -p_PASSWORD_ -e " GRANT ALL PRIVILEGES ON *.* TO '_NEW\_USERNAME_'@'localhost' WITH GRANT OPTION ; "
-    > mysql -uroot -p_PASSWORD_ -e " SHOW GRANTS FOR '_NEW\_USERNAME_'@'localhost' ; "
-    > +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    > | Grants for _NEW\_USERNAME_@localhost                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-    > +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    > | GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, SHUTDOWN, PROCESS, FILE, REFERENCES, INDEX, ALTER, SHOW DATABASES, SUPER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, CREATE TABLESPACE, CREATE ROLE, DROP ROLE ON *.* TO `_NEW\_USERNAME_`@`localhost` WITH GRANT OPTION                                                                                                                                                                                                                                                                                                                                                                                     |
-    > | GRANT APPLICATION_PASSWORD_ADMIN,AUDIT_ABORT_EXEMPT,AUDIT_ADMIN,AUTHENTICATION_POLICY_ADMIN,BACKUP_ADMIN,BINLOG_ADMIN,BINLOG_ENCRYPTION_ADMIN,CLONE_ADMIN,CONNECTION_ADMIN,ENCRYPTION_KEY_ADMIN,FIREWALL_EXEMPT,FLUSH_OPTIMIZER_COSTS,FLUSH_STATUS,FLUSH_TABLES,FLUSH_USER_RESOURCES,GROUP_REPLICATION_ADMIN,GROUP_REPLICATION_STREAM,INNODB_REDO_LOG_ARCHIVE,INNODB_REDO_LOG_ENABLE,PASSWORDLESS_USER_ADMIN,PERSIST_RO_VARIABLES_ADMIN,REPLICATION_APPLIER,REPLICATION_SLAVE_ADMIN,RESOURCE_GROUP_ADMIN,RESOURCE_GROUP_USER,ROLE_ADMIN,SENSITIVE_VARIABLES_OBSERVER,SERVICE_CONNECTION_ADMIN,SESSION_VARIABLES_ADMIN,SET_USER_ID,SHOW_ROUTINE,SYSTEM_USER,SYSTEM_VARIABLES_ADMIN,TABLE_ENCRYPTION_ADMIN,TELEMETRY_LOG_ADMIN,XA_RECOVER_ADMIN ON *.* TO `_NEW\_USERNAME_`@`localhost` WITH GRANT OPTION |
-    > +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+        > mysql -uroot -p_PASSWORD_ -e " GRANT ALL PRIVILEGES ON *.* TO '*NEW_USERNAME*'@'localhost' WITH GRANT OPTION ; "
+        > mysql -uroot -p_PASSWORD_ -e " SHOW GRANTS FOR '*NEW_USERNAME*'@'localhost' ; "
+        > +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+        > | Grants for *NEW_USERNAME*@localhost                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+        > +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+        > | GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, SHUTDOWN, PROCESS, FILE, REFERENCES, INDEX, ALTER, SHOW DATABASES, SUPER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, CREATE TABLESPACE, CREATE ROLE, DROP ROLE ON *.* TO `*NEW_USERNAME*`@`localhost` WITH GRANT OPTION                                                                                                                                                                                                                                                                                                                                                                                     |
+        > | GRANT APPLICATION_PASSWORD_ADMIN,AUDIT_ABORT_EXEMPT,AUDIT_ADMIN,AUTHENTICATION_POLICY_ADMIN,BACKUP_ADMIN,BINLOG_ADMIN,BINLOG_ENCRYPTION_ADMIN,CLONE_ADMIN,CONNECTION_ADMIN,ENCRYPTION_KEY_ADMIN,FIREWALL_EXEMPT,FLUSH_OPTIMIZER_COSTS,FLUSH_STATUS,FLUSH_TABLES,FLUSH_USER_RESOURCES,GROUP_REPLICATION_ADMIN,GROUP_REPLICATION_STREAM,INNODB_REDO_LOG_ARCHIVE,INNODB_REDO_LOG_ENABLE,PASSWORDLESS_USER_ADMIN,PERSIST_RO_VARIABLES_ADMIN,REPLICATION_APPLIER,REPLICATION_SLAVE_ADMIN,RESOURCE_GROUP_ADMIN,RESOURCE_GROUP_USER,ROLE_ADMIN,SENSITIVE_VARIABLES_OBSERVER,SERVICE_CONNECTION_ADMIN,SESSION_VARIABLES_ADMIN,SET_USER_ID,SHOW_ROUTINE,SYSTEM_USER,SYSTEM_VARIABLES_ADMIN,TABLE_ENCRYPTION_ADMIN,TELEMETRY_LOG_ADMIN,XA_RECOVER_ADMIN ON *.* TO `*NEW_USERNAME*`@`localhost` WITH GRANT OPTION |
+        > +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
     - Connected the server to the MySQL Workbench.
