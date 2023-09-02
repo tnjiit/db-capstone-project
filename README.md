@@ -3,11 +3,11 @@
 As a part of *Meta's Coursera Database Engineering Course*, this is the capstone project. The project is expected to span 4 weeks. <br/ >
 The project includes:
 1. Week 1
-    1. Setup the database and *MySQL* server. _Downloaded_ via *brew*.
+    1. Setup the database and *MySQL* server.
     2. Create and implement and Entity Relationship (*ER*) diagram.
         1. Ensure that ER diagram conforms to 3NF. - This helps in avoiding the *insertion, update and delete* anamolies.
         2. Use *MySQL Workbench* for the diagram and generate *sql query* using *Forward Engineering*. MySQL Workbench is a visual tool for database modelling and data management. Via Forward Engineering MySQL Workbench allows us to transform the data model into a physical database schema.
-    3. Setting up *Git* for version control and setting up *GitHub/Git* for project management and publication.
+    3. Setting up version control via *Git* and setting up *GitHub* for project management and publication.
 
 Through this document, I expect to track my progress in the project.
 
