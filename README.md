@@ -16,9 +16,7 @@ To run code from this repo:
 - Create a new conda environment
     > conda create --prefix .venv --file requirements.txt
 - Create a new .env file with the following settings:
-    > MYSQL_USER=`USERNAME`
-    
-    > MYSQL_PASSWORD=`PASSWORD`
+    > MYSQL_USER=`USERNAME` <br/> MYSQL_PASSWORD=`PASSWORD`
 
 ## Glossary:
 
