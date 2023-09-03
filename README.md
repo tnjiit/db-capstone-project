@@ -17,7 +17,7 @@ Through this document, I expect to track my progress in the project.
 
 | Font Type | My Usage | Looks |
 | :--- | :--- | :--- |
-| Italics | For the first instance of term in the document | _italics_, *italics* |
+| Italics | For the first instance of term in the document and for placeholders | _italics_, *italics* |
 | Bold | For actions |  __bold__, **bold** |
 | Highlight | TBD | `highlight` |
 
