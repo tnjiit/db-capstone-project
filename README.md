@@ -68,7 +68,7 @@ Need to set up a booking system to keep track of which guests are visiting the r
 1. __Updated__ ER Model and SQL scripts to align conform with the xlsx data.
     * DeliveryDate can not work because it is not in the right format in the excel sheet.
 1. __Created__ Jupyter notebook to simplify interaction with MySQL
-1. __Implemented__ Stored Procedures for each task1, task2 and task3.
+1. __Implemented__ queries for each task1, task2 and task3.
 
 #### 2nd September 2023 - Week 1
 
