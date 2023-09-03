@@ -51,6 +51,7 @@ Need to set up a booking system to keep track of which guests are visiting the r
 #### 2nd September 2023 - Week 2
 
 * __Added__ python script to populate LittleLemonDB based o the xlsx. This will allow me to test the exercises for Week 2.
+    > MYSQL_USER_PASSWORD=_PASSWORD_ python populate_db.py
 
 #### 2nd September 2023 - Week 1
 
