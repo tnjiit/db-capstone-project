@@ -2,12 +2,16 @@ import pandas as pd
 from mysql.connector import MySQLConnection
 from contextlib import closing
 import os
+import pdb
+
+pd.set_option('display.max_rows', 100)
+# pd.set_option('display.max_columns', 20)
 
 df = pd.read_excel(
                     'LittleLemon.xlsx', 
                 ).rename(
                     columns = {
-                        'Order ID': 'OrderID',
+                        'Order ID': 'OrderID_Not_Key',
                         'Order Date': 'OrderDate',
                         ' Cost': 'TotalCost',
                         'Delivery Date': 'DeliveryDate',
@@ -19,11 +23,10 @@ df = pd.read_excel(
                         'Desert Name': 'Dessert',
                         'Drink': 'Drinks',
                         'Sides': 'SideDish',
+                        'Row Number': 'RowNumber',
                     }
                 )
 print(df.columns)
-
-MenuKeys = ['Starter Name', 'Desert Name', 'Drink', 'Sides']
 
 dbconfig = {
     'user': 'tusharjain',
@@ -90,12 +93,14 @@ execute_dmc(
 execute_dmc(
     '''
     CREATE TABLE Orders (
-        OrderID VARCHAR(45) PRIMARY KEY,
+        OrderID INT PRIMARY KEY AUTO_INCREMENT,
+        OrderID_Not_Key VARCHAR(45),
+        RowNumber INT,
         OrderDate DATE,
         Quantity INT,
         TotalCost DECIMAL,
         CustomerID VARCHAR(45),
-        MenuID INT
+        MenuMenuItemsID INT
     );
     '''
 )
@@ -158,10 +163,45 @@ execute_dmc(
 execute_dmc(
     '''
     CREATE TABLE MenuMenuItems (
+        MenuMenuItemsID INT PRIMARY KEY AUTO_INCREMENT,
         MenuID INT,
-        MenuItemsID INT,
-        CONSTRAINT c_pk PRIMARY KEY(MenuID, MenuItemsID)
+        MenuItemsID INT
     );
+    '''
+)
+
+# Foreign Keys
+execute_dmc(
+    '''
+    ALTER TABLE MenuMenuItems
+    ADD CONSTRAINT c_fk_mmitems_menus FOREIGN KEY(MenuID) REFERENCES Menus(MenuID) ON UPDATE CASCADE ON DELETE CASCADE,
+    ADD CONSTRAINT c_fk_mmitems_menuitems FOREIGN KEY(MenuItemsID) REFERENCES MenuItems(MenuItemsID) ON UPDATE CASCADE ON DELETE CASCADE;
+    '''
+)
+
+execute_dmc(
+    '''
+    ALTER TABLE Orders
+    ADD CONSTRAINT c_fk_orders_mmitems FOREIGN KEY(MenuMenuItemsID) REFERENCES MenuMenuItems(MenuMenuItemsID) ON UPDATE CASCADE ON DELETE CASCADE,
+    ADD CONSTRAINT c_fk_orders_customers FOREIGN KEY(CustomerID) REFERENCES Customers(CustomerID) ON UPDATE CASCADE ON DELETE CASCADE;
+    '''
+)
+
+# Views
+execute_dmc(
+    '''
+    CREATE OR REPLACE VIEW OrdersView AS
+    SELECT OrderID, OrderID_Not_Key, RowNumber, OrderDate, CustomerID, CustomerName, Quantity, TotalCost, Cuisine, MenuID /*, Starter, Dessert, Drinks, SideDish */
+    FROM Orders
+    INNER JOIN Customers
+    USING(CustomerID)
+    INNER JOIN MenuMenuItems
+    USING (MenuMenuItemsID)
+    INNER JOIN Menus
+    USING(MenuID) 
+    INNER JOIN MenuItems
+    USING (MenuItemsID)
+    ORDER BY RowNumber ASC;
     '''
 )
 
@@ -223,7 +263,7 @@ df = pd.merge(
     on=['MainCourse', 'Starter', 'Dessert', 'Drinks', 'SideDish'],
     how='inner',   
 ).sort_values(
-    by=['Row Number'],
+    by=['RowNumber'],
     ascending=True
 )
 
@@ -246,13 +286,54 @@ pd.merge(
             INSERT INTO MenuMenuItems (MenuID, MenuItemsID) VALUES
             ("{x['MenuID']}", "{x['MenuItemsID']}");
             '''
-        ),
-        execute_dmc(
-            f'''
-            INSERT INTO Orders (OrderID, OrderDate, Quantity, TotalCost, CustomerID, MenuID) VALUES
-            ("{x['OrderID']}", "{x['OrderDate']}", "{x['Quantity']}", "{x['TotalCost']}", "{x['CustomerID']}", "{x['MenuID']}");
-            '''
         )
     ],
     axis=1
+)
+
+data = tuple(
+        pd.merge(
+            left=df,
+            right=execute_dql(
+                '''
+                SELECT *
+                FROM MenuMenuItems
+                INNER JOIN Menus
+                USING (MenuID)
+                INNER JOIN MenuItems
+                USING (MenuItemsID);
+                '''
+            ),
+            on=['Cuisine', 'MainCourse', 'Starter', 'Dessert', 'Drinks', 'SideDish'],
+            how='inner'
+            )[['OrderID_Not_Key', 'RowNumber', 'OrderDate', 'Quantity', 'TotalCost', 'CustomerID', 'MenuMenuItemsID']].astype(
+                str
+            ).to_numpy()
+    )
+
+with closing(MySQLConnection(**dbconfig)) as connection:
+    with closing(connection.cursor()) as cursor:
+        cursor.executemany(
+            '''
+            INSERT INTO Orders (OrderID_Not_Key, RowNumber, OrderDate, Quantity, TotalCost, CustomerID, MenuMenuItemsID)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+            ''',
+            data
+        )
+        connection.commit()
+
+# df.assign(
+#     stringify = lambda df: df[['OrderID_Not_Key', 'RowNumber', 'OrderDate', 'Quantity', 'TotalCost', 'CustomerID', 'MenuID']]).astype(str).agg(','.join, axis=1)
+# )['stringify'].transform(
+#         lambda x: "(" + ','.join([f'"{y}"' for y in x.split(',')]) + ")"
+# )
+
+
+print(
+    execute_dql(
+        '''
+        SELECT *
+        FROM OrdersView;
+        '''
+    )
 )
