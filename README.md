@@ -11,6 +11,14 @@ The project includes:
 
 Through this document, I expect to track my progress in the project.
 
+To run code from this repo:
+
+- Create a new conda environment
+    > conda create --prefix .venv --file requirements.txt
+- Create a new .env file with the following settings:
+    > MYSQL_USER=`USERNAME`
+    > MYSQL_PASSWORD=`PASSWORD`
+
 ## Glossary:
 
 #### MARKDOWN
@@ -24,6 +32,12 @@ Through this document, I expect to track my progress in the project.
 ## Release Notes
 
 ### Overview
+
+#### Week 2
+
+- CREATE OrdersView to find all orders that have quantity > 2.
+- Create Query to find CustoemrID, fullname, orderID, cost, CourseName for all customers.
+- Find all MenuItems with more than 2 orders.
 
 #### Week 1
 
@@ -54,6 +68,8 @@ Need to set up a booking system to keep track of which guests are visiting the r
     > MYSQL_USER_PASSWORD=_PASSWORD_ python populate_db.py
 1. __Updated__ ER Model and SQL scripts to align conform with the xlsx data.
     * DeliveryDate can not work because it is not in the right format in the excel sheet.
+1. __Created__ Jupyter notebook to simplify interaction with MySQL
+1. __Implemented__ Stored Procedures for each task1, task2 and task3.
 
 #### 2nd September 2023 - Week 1
 

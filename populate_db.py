@@ -3,7 +3,9 @@ from mysql.connector import MySQLConnection
 from contextlib import closing
 import os
 import pdb
+from dotenv import load_dotenv
 
+load_dotenv()
 pd.set_option('display.max_rows', 100)
 # pd.set_option('display.max_columns', 20)
 
@@ -29,8 +31,8 @@ df = pd.read_excel(
 print(df.columns)
 
 dbconfig = {
-    'user': 'tusharjain',
-    'password': os.getenv(key='MYSQL_USER_PASSWORD'),
+    'user': os.getenv('MYSQL_USER'),
+    'password': os.getenv('MYSQL_PASSWORD'),
     'host': 'localhost',
     'port': '3306'
 }
