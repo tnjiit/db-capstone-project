@@ -50,34 +50,36 @@ Need to set up a booking system to keep track of which guests are visiting the r
 
 #### 2nd September 2023 - Week 2
 
-* __Added__ python script to populate LittleLemonDB based o the xlsx. This will allow me to test the exercises for Week 2.
+1. __Added__ python script to populate LittleLemonDB based o the xlsx. This will allow me to test the exercises for Week 2.
     > MYSQL_USER_PASSWORD=_PASSWORD_ python populate_db.py
+1. __Updated__ ER Model and SQL scripts to align conform with the xlsx data.
+    * DeliveryDate can not work because it is not in the right format in the excel sheet.
 
 #### 2nd September 2023 - Week 1
 
-* __Updated__ ER Model. Entities include: Orders, Customers, Menus, MenusMenuItems, MenuItems
-* __Implemented__ OrdersView as a part of the ER Model itself.
-* __Added__ a new orders_view query to create Virtual Table - OrdersView.
+1. __Updated__ ER Model. Entities include: Orders, Customers, Menus, MenusMenuItems, MenuItems
+1. __Implemented__ OrdersView as a part of the ER Model itself.
+1. __Added__ a new orders_view query to create Virtual Table - OrdersView.
 
 #### 1st September 2023 - Week 1
 
-* __Installed__ the requirements:
-    1. *MySQL* server: __Downloaded__ via *brew*.
-    1. *MySQL Workbench* : __Downloaded__ via *dev.mysql.com/downloads*.
-    1.  Git: __Downloaded__ via *brew*.
-* __Added__ *requirements.txt* for python dependencies in the project.
-* __Added__ *.gitignore* and *README.md* and setup the git repository.
-* __Setup__ github/git: https://github.com/tnjiit/db-capstoneo-project
-* __Setup__ a new user for MySQL server and granted privilages.
-    - __Created__ a new user:
+1. __Installed__ the requirements:
+    * *MySQL* server: __Downloaded__ via *brew*.
+    * *MySQL Workbench* : __Downloaded__ via *dev.mysql.com/downloads*.
+    *  Git: __Downloaded__ via *brew*.
+1. __Added__ *requirements.txt* for python dependencies in the project.
+1. __Added__ *.gitignore* and *README.md* and setup the git repository.
+1. __Setup__ github/git: https://github.com/tnjiit/db-capstoneo-project
+1. __Setup__ a new user for MySQL server and granted privilages.
+    * __Created__ a new user:
 
         > mysql -uroot -p*PASSWORD* -e " CREATE USER \'*NEW_USERNAME*\'@\'localhost\' IDENTIFIED BY \'*NEW_PASSWORD*\' ; "
 
-    - __Confirmed__ creation of new user:
+    * __Confirmed__ creation of new user:
 
         > mysql -uroot -p*PASSWORD* -e " SELECT * FROM mysql.user; "
 
-    - Privilages for *NEW_USERNAME* before any grants:
+    * Privilages for *NEW_USERNAME* before any grants:
 
         > mysql -uroot -p*PASSWORD* -e " SHOW GRANTS FOR \'*NEW_USERNAME*\'@\'localhost\' ; "
 
@@ -92,7 +94,7 @@ Need to set up a booking system to keep track of which guests are visiting the r
         > +----------------------------------------------------+
 
 
-    - __Set__ the new previlates for *NEW_USERNAME*
+    * __Set__ the new previlates for *NEW_USERNAME*
 
         > mysql -uroot -p*PASSWORD* -e " GRANT ALL PRIVILEGES ON *.* TO \'*NEW_USERNAME*\'@\'localhost\' WITH GRANT OPTION ; "
 
@@ -111,5 +113,5 @@ Need to set up a booking system to keep track of which guests are visiting the r
         > +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
-    - __Connected__ the server to the MySQL Workbench.
-    - __Implemented__ the ER model. Entities include: Bookings, Orders, Delivery, Menu, Customers and Staff.
+    * __Connected__ the server to the MySQL Workbench.
+    * __Implemented__ the ER model. Entities include: Bookings, Orders, Delivery, Menu, Customers and Staff.
