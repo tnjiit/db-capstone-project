@@ -48,6 +48,10 @@ Need to set up a booking system to keep track of which guests are visiting the r
 
 ### Implementation
 
+#### 2nd September 2023 - Week 2
+
+* __Added__ python script to populate LittleLemonDB based o the xlsx. This will allow me to test the exercises for Week 2.
+
 #### 2nd September 2023 - Week 1
 
 * __Updated__ ER Model. Entities include: Orders, Customers, Menus, MenusMenuItems, MenuItems
