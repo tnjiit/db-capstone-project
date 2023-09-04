@@ -40,6 +40,13 @@ To run code from this repo:
 - Create Query to find CustoemrID, fullname, orderID, cost, CourseName for all customers.
 - Find all MenuItems with more than 2 orders.
 
+
+##### Exercise 2
+
+- Create Procedure to display max ordered quantity in the orders table.
+- Create a Prepare statement to return order detail for customerID
+- Create a Procedure for removing and order.
+
 #### Week 1
 
 Need to set up a booking system to keep track of which guests are visiting the restaurant and at what times.<br/>
@@ -70,7 +77,9 @@ Need to set up a booking system to keep track of which guests are visiting the r
 1. __Updated__ ER Model and SQL scripts to align conform with the xlsx data.
     * DeliveryDate can not work because it is not in the right format in the excel sheet.
 1. __Created__ Jupyter notebook to simplify interaction with MySQL
-1. __Implemented__ queries for each task1, task2 and task3.
+1. __Implemented__ queries for each task1, task2 and task3 of exercise 1
+1. __Implemented__ queries for task1 and task 3 for exercise 2.
+1. __Implemented__ query for PREPARE statment in SQL.
 
 #### 2nd September 2023 - Week 1
 
