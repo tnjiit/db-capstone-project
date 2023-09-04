@@ -34,6 +34,8 @@ To run code from this repo:
 
 #### Week 2
 
+##### Exercise 1
+
 - CREATE OrdersView to find all orders that have quantity > 2.
 - Create Query to find CustoemrID, fullname, orderID, cost, CourseName for all customers.
 - Find all MenuItems with more than 2 orders.
