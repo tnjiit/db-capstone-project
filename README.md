@@ -57,7 +57,7 @@ To run code from this repo:
 - Create a Stored Procedure called CheckBooking
 - Create a Stored Procedure called AddValidBooking. Have the ability to commit/rollback based on success/failure.
 
-##### Exercise 3
+##### Exercise 4
 
 - Create a Stored Procedure called AddBooking.
 - Create a Stored Procedure called UpdateBooking.
