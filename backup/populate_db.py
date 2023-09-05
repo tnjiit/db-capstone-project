@@ -2,6 +2,7 @@ import pandas as pd
 from mysql.connector import MySQLConnection
 from contextlib import closing
 import os
+import os.path
 import pdb
 from dotenv import load_dotenv
 
@@ -10,7 +11,7 @@ pd.set_option('display.max_rows', 100)
 # pd.set_option('display.max_columns', 20)
 
 df = pd.read_excel(
-                    './LittleLemon.xlsx', 
+                    os.path.join(os.path.split(__file__)[0], 'LittleLemon.xlsx')
                 ).rename(
                     columns = {
                         'Order ID': 'OrderID_Not_Key',

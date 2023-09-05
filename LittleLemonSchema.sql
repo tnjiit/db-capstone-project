@@ -26,6 +26,22 @@ CREATE SCHEMA IF NOT EXISTS `littlelemondb` ;
 USE `LittleLemonDB` ;
 
 -- -----------------------------------------------------
+-- Table `Bookings`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Bookings` ;
+
+CREATE TABLE IF NOT EXISTS `Bookings` (
+  `BookingID` INT(11) NOT NULL AUTO_INCREMENT,
+  `BookingDate` DATE NULL DEFAULT NULL,
+  `TableNumber` INT(11) NULL DEFAULT NULL,
+  `CustomerID` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`BookingID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 10
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `Customers`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `Customers` ;
@@ -125,6 +141,143 @@ AUTO_INCREMENT = 21001
 DEFAULT CHARACTER SET = utf8;
 
 USE `littlelemondb` ;
+USE `LittleLemonDB` ;
+
+-- -----------------------------------------------------
+-- procedure AddBooking
+-- -----------------------------------------------------
+
+USE `LittleLemonDB`;
+DROP procedure IF EXISTS `AddBooking`;
+
+DELIMITER $$
+USE `LittleLemonDB`$$
+CREATE DEFINER=`tusharjain`@`localhost` PROCEDURE `AddBooking`(IN inBookingID INT, IN inCustomerID INT, IN inTableNumber INT, IN inBookingDate DATE)
+BEGIN
+	INSERT INTO Bookings (BookingID, BookingDate, TableNumber, CustomerID) VALUES
+    (inBookingID, inBookingDate, inTableNumber, inCustomerID);
+    SELECT "New booking added" AS Confirmation;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure AddValidBooking
+-- -----------------------------------------------------
+
+USE `LittleLemonDB`;
+DROP procedure IF EXISTS `AddValidBooking`;
+
+DELIMITER $$
+USE `LittleLemonDB`$$
+CREATE DEFINER=`tusharjain`@`localhost` PROCEDURE `AddValidBooking`(IN inBookingDate DATE, IN inTableNumber INT)
+BEGIN
+	START TRANSACTION;
+    INSERT INTO Bookings (BookingDate, TableNumber, CustomerID)
+    VALUES (inBookingDate, inTableNumber, 4);
+    SELECT COUNT(*) INTO @number_of_bookings
+    FROM Bookings
+    WHERE BookingDate=inBookingDATE AND TableNumber = inTableNumber;
+    IF @number_of_bookings > 1 THEN
+		ROLLBACK;
+	ELSE
+		COMMIT;
+	END IF;
+	SELECT CASE 
+		WHEN @number_of_bookings > 1 THEN CONCAT("Table ", inTableNumber, " is already booked - booking cancelled")
+        ELSE CONCAT("Table ", inTableNumber, " is now booked")
+	END AS "Booking Status";
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure CancelBooking
+-- -----------------------------------------------------
+
+USE `LittleLemonDB`;
+DROP procedure IF EXISTS `CancelBooking`;
+
+DELIMITER $$
+USE `LittleLemonDB`$$
+CREATE DEFINER=`tusharjain`@`localhost` PROCEDURE `CancelBooking`(IN inBookingID INT)
+BEGIN
+	DELETE FROM Bookings
+    WHERE BookingID = inBookingID;
+    SELECT CONCAT("Booking ", inBookingID, " cancelled");
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure CancelOrder
+-- -----------------------------------------------------
+
+USE `LittleLemonDB`;
+DROP procedure IF EXISTS `CancelOrder`;
+
+DELIMITER $$
+USE `LittleLemonDB`$$
+CREATE DEFINER=`tusharjain`@`localhost` PROCEDURE `CancelOrder`(IN inOrderID INT)
+BEGIN
+	DELETE FROM Orders WHERE OrderID=inOrderID;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure CheckBooking
+-- -----------------------------------------------------
+
+USE `LittleLemonDB`;
+DROP procedure IF EXISTS `CheckBooking`;
+
+DELIMITER $$
+USE `LittleLemonDB`$$
+CREATE DEFINER=`tusharjain`@`localhost` PROCEDURE `CheckBooking`(IN inBookingDate DATE, IN inTableNumber INT)
+BEGIN
+	SELECT CONCAT("Table ", inTableNumber, " is already booked") AS "Booking Status"
+    FROM Bookings
+    WHERE BookingDate = inBookingDate AND TableNumber = inTableNumber;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure GetMaxQuantity
+-- -----------------------------------------------------
+
+USE `LittleLemonDB`;
+DROP procedure IF EXISTS `GetMaxQuantity`;
+
+DELIMITER $$
+USE `LittleLemonDB`$$
+CREATE DEFINER=`tusharjain`@`localhost` PROCEDURE `GetMaxQuantity`()
+BEGIN
+	SELECT MAX(Quantity)
+    FROM Orders;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure UpdateBooking
+-- -----------------------------------------------------
+
+USE `LittleLemonDB`;
+DROP procedure IF EXISTS `UpdateBooking`;
+
+DELIMITER $$
+USE `LittleLemonDB`$$
+CREATE DEFINER=`tusharjain`@`localhost` PROCEDURE `UpdateBooking`(IN inBookingID INT, IN inBookingDate DATE)
+BEGIN
+	UPDATE Bookings
+    SET BookingDate = inBookingDate
+    WHERE BookingID = inBookingID;
+    SELECT CONCAT("Booking ",inBookingID," updated");
+END$$
+
+DELIMITER ;
 USE `littlelemondb` ;
 
 -- -----------------------------------------------------
@@ -132,7 +285,7 @@ USE `littlelemondb` ;
 -- -----------------------------------------------------
 DROP VIEW IF EXISTS `ordersview` ;
 USE `littlelemondb`;
-CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`tusharjain`@`localhost` SQL SECURITY DEFINER VIEW `ordersview` AS select `orders`.`OrderID` AS `OrderID`,`orders`.`OrderID_Not_Key` AS `OrderID_Not_Key`,`orders`.`RowNumber` AS `RowNumber`,`orders`.`OrderDate` AS `OrderDate`,`orders`.`CustomerID` AS `CustomerID`,`customers`.`CustomerName` AS `CustomerName`,`orders`.`Quantity` AS `Quantity`,`orders`.`TotalCost` AS `TotalCost`,`menus`.`Cuisine` AS `Cuisine`,`menumenuitems`.`MenuID` AS `MenuID` from ((((`orders` join `customers` on((`orders`.`CustomerID` = `customers`.`CustomerID`))) join `menumenuitems` on((`orders`.`MenuMenuItemsID` = `menumenuitems`.`MenuMenuItemsID`))) join `menus` on((`menumenuitems`.`MenuID` = `menus`.`MenuID`))) join `menuitems` on((`menumenuitems`.`MenuItemsID` = `menuitems`.`MenuItemsID`))) order by `orders`.`RowNumber`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`tusharjain`@`localhost` SQL SECURITY DEFINER VIEW `ordersview` AS select `orders`.`OrderID` AS `OrderID`,`orders`.`Quantity` AS `Quantity`,`orders`.`TotalCost` AS `Cost` from `orders` where (`orders`.`Quantity` > 2);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

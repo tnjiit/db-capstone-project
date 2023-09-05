@@ -54,7 +54,7 @@ DROP PROCEDURE IF EXISTS GetMaxQuantity;
 
 DELIMITER //
 
-CREATE PROCEDURE IF NOT EXISTS GetMaxQuantity()
+CREATE PROCEDURE /* IF NOT EXISTS */ GetMaxQuantity()
 BEGIN
 	SELECT MAX(Quantity)
     FROM Orders;
@@ -88,7 +88,7 @@ DROP PROCEDURE IF EXISTS CancelOrder;
 
 DELIMITER //
 
-CREATE PROCEDURE IF NOT EXISTS CancelOrder(IN inOrderID INT)
+CREATE PROCEDURE /* IF NOT EXISTS */ CancelOrder(IN inOrderID INT)
 BEGIN
 	DELETE FROM Orders WHERE OrderID=inOrderID;
 END //
@@ -111,7 +111,7 @@ WHERE OrderID = 1;
 
 DROP TABLE IF EXISTS Bookings;
 
-CREATE TABLE IF NOT EXISTS Bookings (
+CREATE TABLE /* IF NOT EXISTS */ Bookings (
 	BookingID INT PRIMARY KEY AUTO_INCREMENT,
     BookingDate DATE,
     TableNumber INT,
@@ -136,7 +136,7 @@ DROP PROCEDURE IF EXISTS CheckBooking;
 
 DELIMITER //
 
-CREATE PROCEDURE IF NOT EXISTS CheckBooking(IN inBookingDate DATE, IN inTableNumber INT)
+CREATE PROCEDURE /* IF NOT EXISTS */ CheckBooking(IN inBookingDate DATE, IN inTableNumber INT)
 BEGIN
 	SELECT CONCAT("Table ", inTableNumber, " is already booked") AS "Booking Status"
     FROM Bookings
@@ -157,7 +157,7 @@ DROP PROCEDURE IF EXISTS AddValidBooking;
 
 DELIMITER //
 
-CREATE PROCEDURE IF NOT EXISTS AddValidBooking(IN inBookingDate DATE, IN inTableNumber INT)
+CREATE PROCEDURE /* IF NOT EXISTS */ AddValidBooking(IN inBookingDate DATE, IN inTableNumber INT)
 BEGIN
 	START TRANSACTION;
     INSERT INTO Bookings (BookingDate, TableNumber, CustomerID)
@@ -187,7 +187,7 @@ SELECT * FROM Bookings;
 DROP PROCEDURE IF EXISTS AddBooking;
 
 DELIMITER //
-CREATE PROCEDURE IF NOT EXISTS AddBooking(IN inBookingID INT, IN inCustomerID INT, IN inTableNumber INT, IN inBookingDate DATE)
+CREATE PROCEDURE /* IF NOT EXISTS */ AddBooking(IN inBookingID INT, IN inCustomerID INT, IN inTableNumber INT, IN inBookingDate DATE)
 BEGIN
 	INSERT INTO Bookings (BookingID, BookingDate, TableNumber, CustomerID) VALUES
     (inBookingID, inBookingDate, inTableNumber, inCustomerID);
@@ -210,7 +210,7 @@ SELECT * FROM Bookings;
 DROP PROCEDURE IF EXISTS UpdateBooking;
 
 DELIMITER //
-CREATE PROCEDURE IF NOT EXISTS UpdateBooking(IN inBookingID INT, IN inBookingDate DATE)
+CREATE PROCEDURE /* IF NOT EXISTS */ UpdateBooking(IN inBookingID INT, IN inBookingDate DATE)
 BEGIN
 	UPDATE Bookings
     SET BookingDate = inBookingDate
@@ -229,7 +229,7 @@ COMMIT;
 DROP PROCEDURE IF EXISTS CancelBooking;
 
 DELIMITER //
-CREATE PROCEDURE IF NOT EXISTS CancelBooking(IN inBookingID INT)
+CREATE PROCEDURE /* IF NOT EXISTS */ CancelBooking(IN inBookingID INT)
 BEGIN
 	DELETE FROM Bookings
     WHERE BookingID = inBookingID;
