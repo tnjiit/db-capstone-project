@@ -10,7 +10,7 @@ pd.set_option('display.max_rows', 100)
 # pd.set_option('display.max_columns', 20)
 
 df = pd.read_excel(
-                    'LittleLemon.xlsx', 
+                    './LittleLemon.xlsx', 
                 ).rename(
                     columns = {
                         'Order ID': 'OrderID_Not_Key',
