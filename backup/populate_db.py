@@ -18,7 +18,7 @@ df = pd.read_excel(
                         'Order Date': 'OrderDate',
                         ' Cost': 'TotalCost',
                         'Delivery Date': 'DeliveryDate',
-                        'Customer ID': 'CustomerID',
+                        'Customer ID': 'ContactNumber',
                         'Customer Name': 'CustomerName',
                         'Cuisine Name': 'Cuisine',
                         'Course Name': 'MainCourse',
@@ -102,7 +102,7 @@ execute_dmc(
         OrderDate DATE,
         Quantity INT,
         TotalCost DECIMAL,
-        CustomerID VARCHAR(45),
+        CustomerID INT,
         MenuMenuItemsID INT
     );
     '''
@@ -117,8 +117,9 @@ execute_dmc(
 execute_dmc(
     '''
     CREATE TABLE Customers (
-        CustomerID VARCHAR(45) PRIMARY KEY,
-        CustomerName VARCHAR(255)
+        CustomerID INT PRIMARY KEY AUTO_INCREMENT,
+        CustomerName VARCHAR(255),
+        ContactNumber VARCHAR(11)
     );
     '''
 )
@@ -194,7 +195,7 @@ execute_dmc(
 execute_dmc(
     '''
     CREATE OR REPLACE VIEW OrdersView AS
-    SELECT OrderID, OrderID_Not_Key, RowNumber, OrderDate, CustomerID, CustomerName, Quantity, TotalCost, Cuisine, MenuID /*, Starter, Dessert, Drinks, SideDish */
+    SELECT OrderID, OrderID_Not_Key, RowNumber, OrderDate, CustomerID, CustomerName, ContactNumber, Quantity, TotalCost, Cuisine, MenuID /*, Starter, Dessert, Drinks, SideDish */
     FROM Orders
     INNER JOIN Customers
     USING(CustomerID)
@@ -218,12 +219,12 @@ print(
 
 # Customers
 df.drop_duplicates(
-    subset=['CustomerID', 'CustomerName']
+    subset=['ContactNumber', 'CustomerName']
 ).apply(
     lambda x: execute_dmc(
         f"""
-                INSERT INTO Customers (CustomerID, CustomerName) VALUES 
-                ("{x['CustomerID']}", "{x['CustomerName']}");
+                INSERT INTO Customers (CustomerName, ContactNumber) VALUES 
+                ("{x['CustomerName']}", "{x['ContactNumber']}");
                 """
     ),
     axis=1
@@ -296,22 +297,32 @@ pd.merge(
 
 data = tuple(
         pd.merge(
-            left=df,
-            right=execute_dql(
+            left = pd.merge(
+                    left=df,
+                    right=execute_dql(
+                        '''
+                        SELECT *
+                        FROM MenuMenuItems
+                        INNER JOIN Menus
+                        USING (MenuID)
+                        INNER JOIN MenuItems
+                        USING (MenuItemsID);
+                        '''
+                    ),
+                    on=['Cuisine', 'MainCourse', 'Starter', 'Dessert', 'Drinks', 'SideDish'],
+                    how='inner'
+                ),
+            right = execute_dql(
                 '''
                 SELECT *
-                FROM MenuMenuItems
-                INNER JOIN Menus
-                USING (MenuID)
-                INNER JOIN MenuItems
-                USING (MenuItemsID);
+                FROM Customers;
                 '''
             ),
-            on=['Cuisine', 'MainCourse', 'Starter', 'Dessert', 'Drinks', 'SideDish'],
-            how='inner'
-            )[['OrderID_Not_Key', 'RowNumber', 'OrderDate', 'Quantity', 'TotalCost', 'CustomerID', 'MenuMenuItemsID']].astype(
-                str
-            ).to_numpy()
+            on = ['CustomerName', 'ContactNumber'],
+            how = 'inner'
+        )[['OrderID_Not_Key', 'RowNumber', 'OrderDate', 'Quantity', 'TotalCost', 'CustomerID', 'MenuMenuItemsID']].astype(
+            str
+        ).to_numpy()
     )
 
 with closing(MySQLConnection(**dbconfig)) as connection:

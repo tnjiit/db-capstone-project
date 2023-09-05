@@ -10,6 +10,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema LittleLemonDB
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `LittleLemonDB` ;
 
 -- -----------------------------------------------------
 -- Schema LittleLemonDB
@@ -18,6 +19,7 @@ CREATE SCHEMA IF NOT EXISTS `LittleLemonDB` DEFAULT CHARACTER SET utf8 ;
 -- -----------------------------------------------------
 -- Schema littlelemondb
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `littlelemondb` ;
 
 -- -----------------------------------------------------
 -- Schema littlelemondb
@@ -47,10 +49,12 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `Customers` ;
 
 CREATE TABLE IF NOT EXISTS `Customers` (
-  `CustomerID` VARCHAR(45) NOT NULL,
+  `CustomerID` INT(11) NOT NULL AUTO_INCREMENT,
   `CustomerName` VARCHAR(255) NULL DEFAULT NULL,
+  `ContactNumber` VARCHAR(11) NULL DEFAULT NULL,
   PRIMARY KEY (`CustomerID`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 1001
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -123,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `Orders` (
   `OrderDate` DATE NULL DEFAULT NULL,
   `Quantity` INT(11) NULL DEFAULT NULL,
   `TotalCost` DECIMAL(10,0) NULL DEFAULT NULL,
-  `CustomerID` VARCHAR(45) NULL DEFAULT NULL,
+  `CustomerID` INT(11) NULL DEFAULT NULL,
   `MenuMenuItemsID` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`OrderID`),
   CONSTRAINT `c_fk_orders_customers`
