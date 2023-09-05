@@ -87,6 +87,10 @@ Need to set up a booking system to keep track of which guests are visiting the r
 
 ### Implementation
 
+#### 5th September 2023 - Week 2
+
+1. __Updated__ Schema to reflect the new table (Bookings) and View (OrdersView) from week2.
+
 #### 4th September 2023 - Week 2
 
 1. __Moved__ all queries to week2.sql
