@@ -51,6 +51,19 @@ To run code from this repo:
 - Create a Prepare statement to return order detail for customerID
 - Create a Procedure for removing and order.
 
+##### Exercise 3
+
+- Create a bookings table.
+- Create a Stored Procedure called CheckBooking
+- Create a Stored Procedure called AddValidBooking. Have the ability to commit/rollback based on success/failure.
+
+##### Exercise 3
+
+- Create a Stored Procedure called AddBooking.
+- Create a Stored Procedure called UpdateBooking.
+- Create a Stored Procedure called CancelBooking.
+
+
 #### Week 1
 
 Need to set up a booking system to keep track of which guests are visiting the restaurant and at what times.<br/>
@@ -73,6 +86,11 @@ Need to set up a booking system to keep track of which guests are visiting the r
 
 
 ### Implementation
+
+#### 4th September 2023 - Week 2
+
+1. __Moved__ all queries to week2.sql
+1. __Implemented__ all tasks for all 4 exercises in week 2. The relevant procedures are in the week2.sql
 
 #### 2nd September 2023 - Week 2
 
