@@ -36,6 +36,12 @@ To run code from this repo:
 
 ### Overview
 
+#### Week 3
+
+##### Exercise 1
+
+- Use Tableau for data-ananlysis. 
+
 #### Week 2
 
 ##### Exercise 1
@@ -86,6 +92,10 @@ Need to set up a booking system to keep track of which guests are visiting the r
 
 
 ### Implementation
+
+#### 5th September 2023 - Week 3
+
+1. __Created__ all the required sheets and dashboard in tableu and moved them to week3-tableau folder.
 
 #### 4th September 2023 - Week 2
 
