@@ -16,7 +16,7 @@ To run code from this repo:
 1. Remove the conda environment if there is already one.
     > conda env remove --prefix .venv
 1. Create a new conda environment
-    > conda create --prefix .venv --file requirements.txt
+    > conda create --prefix .venv --file backup/requirements.txt
 1. Create a new .env file with the following settings:
     > MYSQL_USER=`USERNAME` <br/> MYSQL_PASSWORD=`PASSWORD`
 1. Activate the conda env
