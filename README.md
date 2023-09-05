@@ -13,10 +13,14 @@ Through this document, I expect to track my progress in the project.
 
 To run code from this repo:
 
-- Create a new conda environment
+1. Remove the conda environment if there is already one.
+    > conda env remove --prefix .venv
+1. Create a new conda environment
     > conda create --prefix .venv --file requirements.txt
-- Create a new .env file with the following settings:
+1. Create a new .env file with the following settings:
     > MYSQL_USER=`USERNAME` <br/> MYSQL_PASSWORD=`PASSWORD`
+1. Activate the conda env
+    > conda activate ./.venv
 
 ## Glossary:
 
